@@ -26,3 +26,9 @@ n_wo <- length(unique(workouts$workout_number))
 workouts %>% 
   filter(workout_number == sample(1:n_wo, 1)) %>% 
   view()
+
+# base plot ---------------------------------------------------------------
+
+workouts %>% 
+  filter(workout_number == 1) %>% 
+  ggplot(aes(type, movement))
