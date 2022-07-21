@@ -25,10 +25,10 @@ n_wo <- length(unique(workouts$workout_number))
 
 workouts %>% 
   filter(workout_number == sample(1:n_wo, 1)) %>% 
-  view()
+  janitor::remove_empty("cols") %>% 
+  rename_with(str_to_sentence)
+  gt::gt(.) %>% 
+  gt::cols_label(everything() ~ str_to_title) 
+  gtExtras::gt_theme_538()
 
-# base plot ---------------------------------------------------------------
 
-workouts %>% 
-  filter(workout_number == 1) %>% 
-  ggplot(aes(type, movement))
