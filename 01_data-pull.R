@@ -17,18 +17,26 @@ wo <- drive_get("workouts")
 gs4_get(wo)
 
 # Load "workouts" sheet from "workouts"
-workouts <- read_sheet(wo, sheet = "workouts")
+workouts <- read_sheet(wo, sheet = "workouts") 
 
 # Pull Random Workout
 
 n_wo <- length(unique(workouts$workout_number))
 
-workouts %>% 
-  filter(workout_number == sample(1:n_wo, 1)) %>% 
-  janitor::remove_empty("cols") %>% 
-  rename_with(str_to_sentence)
-  gt::gt(.) %>% 
-  gt::cols_label(everything() ~ str_to_title) 
+workouts %>%
+  mutate(notes = snakecase::to_sentence_case(notes)) %>%
+  mutate(
+    # across(where(is.list), ~ na_if(., is.null)),
+    across(where(is.list), as.character)
+  ) %>%
+  filter(workout_number == sample(1:n_wo, 1)) %>%
+  mutate(across(where(is.character), ~na_if(., "NULL"))) %>% 
+  janitor::remove_empty("cols") %>%
+  select(-workout_number) %>% 
+  rename_with(snakecase::to_title_case) %>% 
+  gt::gt(.) %>%
+  gt::sub_missing(everything(),
+                  missing_text = "---") %>% 
   gtExtras::gt_theme_538()
 
 
