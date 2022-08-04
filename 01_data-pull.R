@@ -5,7 +5,8 @@ pacman::p_load(tidyverse, googlesheets4, googledrive)
 
 # Authorize access to Google Drive for googledrive and googlesheets4
 googledrive::drive_auth()
-gs4_auth(token = drive_token())
+
+googlesheets4::gs4_auth(token = googledrive::drive_token())
 
 # Find the sheet named "workouts"
 drive_find("workouts")
