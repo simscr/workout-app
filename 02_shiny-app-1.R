@@ -32,9 +32,9 @@ shinyApp(ui = ui, server = server)
 
 # browseURL("https://jnolis.com/blog/shiny_mobile/")
 
-# options(
-#   # whenever there is one account token found, use the cached token
-#   gargle_oauth_email = TRUE,
-#   # specify auth tokens should be stored in a hidden directory ".secrets"
-#   gargle_oauth_cache = "workout-app/.secrets"
-# )
+options(
+  # whenever there is one account token found, use the cached token
+  gargle_oauth_email = TRUE,
+  # specify auth tokens should be stored in a hidden directory ".secrets"
+  gargle_oauth_cache = "workout-app/.secrets"
+)
