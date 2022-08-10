@@ -41,3 +41,19 @@ workouts %>%
   gtExtras::gt_theme_538()
 
 
+workouts %>%
+  mutate(notes = snakecase::to_sentence_case(notes)) %>%
+  mutate(
+    # across(where(is.list), ~ na_if(., is.null)),
+    across(where(is.list), as.character)
+  ) %>%
+  filter(name == "Flabuless Arms") %>%
+  mutate(across(where(is.character), ~na_if(., "NULL"))) %>% 
+  janitor::remove_empty("cols") %>%
+  select(-workout_number) %>% 
+  rename_with(snakecase::to_title_case) %>% 
+  gt::gt(.) %>%
+  gt::sub_missing(everything(),
+                  missing_text = "---") %>% 
+  gtExtras::gt_theme_538() %>% 
+  gt::cols_align(columns = 3, align = "center")
