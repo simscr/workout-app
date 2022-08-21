@@ -4,7 +4,7 @@
 pacman::p_load(tidyverse, googlesheets4, googledrive)
 
 # Authorize access to Google Drive for googledrive and googlesheets4
-googledrive::drive_auth()
+googledrive::drive_auth(email = TRUE)
 
 googlesheets4::gs4_auth(token = googledrive::drive_token())
 
@@ -47,7 +47,7 @@ workouts %>%
     # across(where(is.list), ~ na_if(., is.null)),
     across(where(is.list), as.character)
   ) %>%
-  filter(name == "Flabuless Arms") %>%
+  filter(name == "Puppy Chow") %>%
   mutate(across(where(is.character), ~na_if(., "NULL"))) %>% 
   janitor::remove_empty("cols") %>%
   select(-workout_number) %>% 
