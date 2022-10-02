@@ -74,13 +74,9 @@ ui <- fluidPage(
   # Sidebar with a random workout input and a select input
   sidebarLayout(
     sidebarPanel(
-      "Selection Options",
       hr(), 
       actionButton("random_button", label = "Random Workout"),
-      hr(),
-      selectInput("name", label = "Search by Name", choices = unique(workouts %>%
-        filter(!is.na(name)) %>%
-        pluck("name")))
+      hr()
     ),
 
     # Show a plot of the generated workout
