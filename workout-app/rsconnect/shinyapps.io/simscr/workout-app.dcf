@@ -1,0 +1,13 @@
+name: workout-app
+title: workout-app
+username:
+account: simscr
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7248359
+bundleId: 6381598
+url: https://simscr.shinyapps.io/workout-app/
+when: 1665196764.23687
+lastSyncTime: 1665196764.23689
+asMultiple: FALSE
+asStatic: FALSE

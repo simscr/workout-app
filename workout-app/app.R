@@ -4,9 +4,14 @@ library(tidyverse)
 library(gt)
 library(gtExtras)
 
-googledrive::drive_auth(email = TRUE)
+options(
+  gargle_oauth_email = TRUE,
+  gargle_oauth_cache = "workout-app/.secrets"
+)
 
-googlesheets4::gs4_auth(token = googledrive::drive_token())
+# googledrive::drive_auth(email = TRUE)
+# 
+# googlesheets4::gs4_auth(token = googledrive::drive_token())
 
 sheet_id <- googledrive::drive_get("workouts")$id
 
@@ -16,52 +21,6 @@ workouts <- googlesheets4::read_sheet(
 )
 
 n_wo <- length(unique(workouts$workout_number))
-
-wo_name <- "Death"
-
-
-# functions ---------------------------------------------------------------
-
-random_wo <- function() {
-  workouts %>%
-    mutate(notes = snakecase::to_sentence_case(notes)) %>%
-    mutate(
-      # across(where(is.list), ~ na_if(., is.null)),
-      across(where(is.list), as.character)
-    ) %>%
-    filter(workout_number == sample(1:n_wo, 1)) %>%
-    mutate(across(where(is.character), ~ na_if(., "NULL"))) %>%
-    janitor::remove_empty("cols") %>%
-    select(-workout_number) %>%
-    rename_with(snakecase::to_title_case) %>%
-    gt::gt(.) %>%
-    gt::sub_missing(everything(),
-      missing_text = "---"
-    ) %>%
-    gtExtras::gt_theme_538()
-}
-
-
-specific_wo <- function(term) {
-  workouts %>%
-    mutate(notes = snakecase::to_sentence_case(notes)) %>%
-    mutate(
-      # across(where(is.list), ~ na_if(., is.null)),
-      across(where(is.list), as.character)
-    ) %>%
-    filter(name == term) %>%
-    mutate(across(where(is.character), ~ na_if(., "NULL"))) %>%
-    janitor::remove_empty("cols") %>%
-    select(-workout_number) %>%
-    rename_with(snakecase::to_title_case) %>%
-    gt::gt(.) %>%
-    gt::sub_missing(everything(),
-      missing_text = "---"
-    ) %>%
-    gtExtras::gt_theme_538() %>%
-    gt::cols_align(columns = 3, align = "center")
-}
-
 
 # ui ----------------------------------------------------------------------
 
@@ -117,27 +76,7 @@ server <- function(input, output) {
           missing_text = "---"
         ) %>%
         gtExtras::gt_theme_538()
-  
-    # workouts %>%
-    #   mutate(notes = snakecase::to_sentence_case(notes)) %>%
-    #   mutate(
-    #     # across(where(is.list), ~ na_if(., is.null)),
-    #     across(where(is.list), as.character)
-    #   ) %>%
-    #   filter(workout_name == workout_name()) %>%
-    #   mutate(across(where(is.character), ~ na_if(., "NULL"))) %>%
-    #   janitor::remove_empty("cols") %>%
-    #   select(-workout_number) %>%
-    #   rename_with(snakecase::to_title_case) %>%
-    #   gt::gt(.) %>%
-    #   gt::sub_missing(everything(),
-    #                   missing_text = "---"
-    #   ) %>%
-    #   gtExtras::gt_theme_538()
-    
   })
-  
-    
 }
 
 
