@@ -1,24 +1,30 @@
 
-library(shiny)
+# library(shiny)
 library(tidyverse)
 library(gt)
 library(gtExtras)
+library(rio)
+library(here)
 
-options(
-  gargle_oauth_email = TRUE,
-  gargle_oauth_cache = "workout-app/.secrets"
-)
-
-# googledrive::drive_auth(email = TRUE)
+# options(
+#   gargle_oauth_email = TRUE,
+#   gargle_oauth_cache = "workout-app/.secrets"
+# )
 # 
-# googlesheets4::gs4_auth(token = googledrive::drive_token())
+# # googledrive::drive_auth(email = TRUE)
+# # 
+# # googlesheets4::gs4_auth(token = googledrive::drive_token())
+# 
+# sheet_id <- googledrive::drive_get("workouts")$id
+# 
+# workouts <- googlesheets4::read_sheet(
+#   ss = sheet_id,
+#   sheet = "workouts"
+# )
+# 
+# rio::export(workouts, here::here("workouts.rds"))
 
-sheet_id <- googledrive::drive_get("workouts")$id
-
-workouts <- googlesheets4::read_sheet(
-  ss = sheet_id,
-  sheet = "workouts"
-)
+workouts <- rio::import(here::here("data", "workouts.rds"))
 
 n_wo <- length(unique(workouts$workout_number))
 
