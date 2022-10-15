@@ -5,10 +5,10 @@ account: simscr
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 7248359
-bundleId: 6393663
+bundleId: 6404893
 url: https://simscr.shinyapps.io/workout-app/
-when: 1665538578.57629
-lastSyncTime: 1665538578.57631
+when: 1665797339.8636
+lastSyncTime: 1665797339.86361
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .secrets/134f22af3ae3a9f0b7f0eb57dd61916f_simscr90@gmail.com|.secrets/d67d4efb39eee449dc62932502fd8a0f_simscr90@gmail.com
